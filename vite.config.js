@@ -24,13 +24,13 @@ export default defineConfig(({ mode }) => {
         ],
         server: {
             host: '0.0.0.0',
-            port: parseInt(env.VITE_SERVER_PORT || '5173'),
-            strictPort: true,
+            port: parseInt(process.env.PORT || env.VITE_SERVER_PORT || '5173'),
+            strictPort: false,
         },
         preview: {
             host: '0.0.0.0',
-            port: 5173,
-            strictPort: true,
+            port: parseInt(process.env.PORT || '5173'),
+            strictPort: false,
         },
     };
 });
