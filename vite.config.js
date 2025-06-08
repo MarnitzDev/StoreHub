@@ -23,12 +23,12 @@ export default defineConfig(({ mode }) => {
             tailwindcss(),
         ],
         server: {
-            host: env.VITE_SERVER_HOST || 'localhost',
+            host: '0.0.0.0',
             port: parseInt(env.VITE_SERVER_PORT || '5173'),
             strictPort: true,
         },
         preview: {
-            host: 'localhost',
+            host: '0.0.0.0',
             port: 5173,
             strictPort: true,
         },
