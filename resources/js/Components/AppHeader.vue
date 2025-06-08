@@ -6,10 +6,14 @@
             </div>
             <nav class="navigation">
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Products</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li>
+                        <Link href="/" class="nav-link">Home</Link>
+                    </li>
+                    <li>
+                        <Link href="/products" class="nav-link">Products</Link>
+                    </li>
+                    <li><a href="#" class="nav-link">About</a></li>
+                    <li><a href="#" class="nav-link">Contact</a></li>
                 </ul>
             </nav>
             <div class="user-actions">
@@ -23,6 +27,7 @@
 
 <script setup>
 import Button from 'primevue/button';
+import { Link } from '@inertiajs/vue3';
 </script>
 
 <style scoped>
@@ -58,7 +63,7 @@ import Button from 'primevue/button';
     margin: 0 1rem;
 }
 
-.navigation a {
+.navigation .nav-link {
     text-decoration: none;
     color: #333;
     font-weight: 500;

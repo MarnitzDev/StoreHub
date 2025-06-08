@@ -1,33 +1,37 @@
 <template>
-    <div class="landing-page">
-        <AppHeader />
-        <div class="content p-d-flex p-flex-column p-ai-center">
-            <h2>Welcome to StoreHub</h2>
-            <p>Discover amazing products at great prices!</p>
-            <Button label="Shop Now" icon="pi pi-shopping-cart" class="p-button-rounded" />
+    <AppLayout>
+        <div class="landing-page">
+            <div class="content p-d-flex p-flex-column p-ai-center">
+                <h2>Welcome to StoreHub</h2>
+                <p>Discover amazing products at great prices!</p>
+                <Link href="/products">
+                    <Button label="Shop Now" icon="pi pi-shopping-cart" class="p-button-rounded" />
+                </Link>
 
-            <div class="featured-products">
-                <h3>Featured Products</h3>
-                <Carousel :value="products" :numVisible="3" :numScroll="1" :responsiveOptions="responsiveOptions">
-                    <template #item="slotProps">
-                        <div class="product-item">
-                            <img :src="slotProps.data.image" :alt="slotProps.data.name" />
-                            <h4>{{ slotProps.data.name }}</h4>
-                            <h6>${{ slotProps.data.price }}</h6>
-                            <Button icon="pi pi-shopping-cart" class="p-button-rounded" />
-                        </div>
-                    </template>
-                </Carousel>
+                <div class="featured-products">
+                    <h3>Featured Products</h3>
+                    <Carousel :value="products" :numVisible="3" :numScroll="1" :responsiveOptions="responsiveOptions">
+                        <template #item="slotProps">
+                            <div class="product-item">
+                                <img :src="slotProps.data.image" :alt="slotProps.data.name" />
+                                <h4>{{ slotProps.data.name }}</h4>
+                                <h6>${{ slotProps.data.price }}</h6>
+                                <Button icon="pi pi-shopping-cart" class="p-button-rounded" />
+                            </div>
+                        </template>
+                    </Carousel>
+                </div>
             </div>
         </div>
-    </div>
+    </AppLayout>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { Link } from '@inertiajs/vue3';
 import Button from 'primevue/button';
 import Carousel from 'primevue/carousel';
-import AppHeader from '@/Components/AppHeader.vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
 
 const products = ref([
     { id: 1, name: 'Product 1', price: 19.99, image: 'https://via.placeholder.com/150' },
