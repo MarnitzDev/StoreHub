@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
         server: {
             host: '0.0.0.0',
             port: parseInt(process.env.PORT || env.VITE_SERVER_PORT || '5173'),
-            strictPort: true,
+            strictPort: false,
             hmr: {
                 clientPort: 443,
             },
