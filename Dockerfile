@@ -27,11 +27,14 @@ COPY . /var/www
 
 # Set permissions for Composer
 RUN chown -R www-data:www-data /var/www
+
+# Switch to www-data user
 USER www-data
 
-# Install dependencies with verbose output and ignore platform requirements
-RUN composer install --no-dev --optimize-autoloader --verbose --ignore-platform-reqs || (cat /var/www/var/log/composer.log && exit 1)
+# Install dependencies
+RUN composer install --no-dev --no-scripts --optimize-autoloader
 
+# Switch back to root
 USER root
 
 # Install Node.js
@@ -55,6 +58,9 @@ RUN cp .env.example .env
 
 # Generate application key and update .env
 RUN php artisan key:generate
+
+# Run post-install scripts
+RUN php artisan package:discover --ansi
 
 # Clear and cache config
 RUN php artisan config:clear
