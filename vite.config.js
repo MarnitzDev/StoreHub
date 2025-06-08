@@ -25,12 +25,22 @@ export default defineConfig(({ mode }) => {
         server: {
             host: '0.0.0.0',
             port: parseInt(process.env.PORT || env.VITE_SERVER_PORT || '5173'),
-            strictPort: false,
+            strictPort: true,
+            hmr: {
+                clientPort: 443,
+            },
+            allowedHosts: [
+                "localhost",
+                "127.0.0.1",
+                "storehub-yerq.onrender.com",
+                ".onrender.com",
+                "storehub.marnitzmalan.com",
+            ],
         },
         preview: {
             host: '0.0.0.0',
             port: parseInt(process.env.PORT || '5173'),
-            strictPort: false,
+            strictPort: true,
         },
     };
 });
