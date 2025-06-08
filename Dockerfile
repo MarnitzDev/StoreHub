@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install mbstring exif pcntl bcmath gd
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -26,7 +26,7 @@ WORKDIR /var/www
 COPY . /var/www
 
 # Install dependencies
-RUN composer install
+RUN composer install --no-dev --optimize-autoloader
 
 # Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
@@ -47,8 +47,19 @@ RUN pnpm run build
 # Copy .env.example to .env
 RUN cp .env.example .env
 
+# Update APP_URL in .env (adjust this URL to match your Render URL)
+RUN sed -i 's#APP_URL=http://localhost#APP_URL=https://storehub-6f2p.onrender.com/' .env
+
 # Generate application key and update .env
 RUN php artisan key:generate
+
+# Clear and cache config
+RUN php artisan config:clear
+RUN php artisan config:cache
+
+# Set permissions
+RUN chown -R www-data:www-data /var/www
+RUN chmod -R 755 /var/www/storage
 
 # Expose port 8000
 EXPOSE 8000
