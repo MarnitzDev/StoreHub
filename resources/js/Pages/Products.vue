@@ -2,14 +2,15 @@
     <AppLayout>
         <div class="products-page">
             <h1>Products</h1>
-            <div class="product-grid">
+            <div v-if="products.length" class="product-grid">
                 <div v-for="product in products" :key="product.id" class="product-card">
                     <img :src="product.image" :alt="product.title" class="product-image">
                     <h2>{{ product.title }}</h2>
-                    <p class="price">${{ product.price }}</p>
+                    <p class="price">${{ product.price.toFixed(2) }}</p>
                     <Link :href="`/products/${product.id}`" class="view-details">View Details</Link>
                 </div>
             </div>
+            <p v-else>No products available.</p>
         </div>
     </AppLayout>
 </template>
@@ -18,8 +19,11 @@
 import { Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 
-defineProps({
-    products: Array,
+const props = defineProps({
+    products: {
+        type: Array,
+        default: () => []
+    },
 });
 </script>
 
