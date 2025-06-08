@@ -47,11 +47,11 @@ RUN pnpm run build
 # Copy .env.example to .env
 RUN cp .env.example .env
 
-# Generate application key
-RUN php artisan key:generate --show --no-ansi > /tmp/app_key.txt
+# Generate application key and update .env
+RUN php artisan key:generate
 
 # Expose port 8000
 EXPOSE 8000
 
 # Start php-fpm server
-CMD APP_KEY=$(cat /tmp/app_key.txt) php artisan serve --host=0.0.0.0 --port=8000
+CMD php artisan serve --host=0.0.0.0 --port=8000
