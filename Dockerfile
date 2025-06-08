@@ -47,9 +47,6 @@ RUN pnpm run build
 # Copy .env.example to .env
 RUN cp .env.example .env
 
-# Update APP_URL in .env (adjust this URL to match your Render URL)
-RUN sed -i 's#APP_URL=http://localhost#APP_URL=https://storehub-6f2p.onrender.com/' .env
-
 # Generate application key and update .env
 RUN php artisan key:generate
 
