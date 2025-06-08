@@ -1,29 +1,69 @@
 <template>
     <AppLayout>
         <div class="products-page">
-            <h1>Products</h1>
-            <div v-if="products.length" class="product-grid">
-                <div v-for="product in products" :key="product.id" class="product-card">
+            <h1 class="text-3xl font-bold text-blue-500 mb-4">Products</h1>
+
+
+            <div class="card flex justify-center">
+                <div class="p-selectbutton p-component" role="group" aria-labelledby="category-filter">
+                    <button
+                        v-for="category in categories"
+                        :key="category"
+                        type="button"
+                        class="p-togglebutton p-component"
+                        :class="{ 'p-togglebutton-checked': selectedCategory === category }"
+                        :aria-pressed="selectedCategory === category"
+                        @click="selectCategory(category)"
+                    >
+                        <span class="p-togglebutton-content">
+                            <span class="p-togglebutton-label">{{ category }}</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <div v-if="filteredProducts.length" class="product-grid">
+                <div v-for="product in filteredProducts" :key="product.id" class="product-card">
                     <img :src="product.image" :alt="product.title" class="product-image">
                     <h2>{{ product.title }}</h2>
                     <p class="price">${{ product.price.toFixed(2) }}</p>
+                    <p class="category">{{ product.category }}</p>
                     <Link :href="`/products/${product.id}`" class="view-details">View Details</Link>
                 </div>
             </div>
-            <p v-else>No products available.</p>
+            <p v-else>No products available in this category.</p>
         </div>
     </AppLayout>
 </template>
 
 <script setup>
+import { ref, computed } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import Button from 'primevue/button';
 
 const props = defineProps({
     products: {
         type: Array,
         default: () => []
     },
+    categories: {
+        type: Array,
+        default: () => ['All Categories']
+    }
+});
+
+const selectedCategory = ref('All Categories');
+
+const selectCategory = (category) => {
+    selectedCategory.value = category;
+};
+
+const filteredProducts = computed(() => {
+    if (selectedCategory.value === 'All Categories') {
+        return props.products;
+    }
+    return props.products.filter(product => product.category === selectedCategory.value);
 });
 </script>
 
@@ -36,6 +76,48 @@ const props = defineProps({
 h1 {
     text-align: center;
     margin-bottom: 2rem;
+}
+
+.card {
+    margin-bottom: 2rem;
+}
+
+.p-selectbutton {
+    display: flex;
+}
+
+.p-togglebutton {
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    color: #495057;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    padding: 0.5rem 1rem;
+}
+
+.p-togglebutton:not(:last-child) {
+    border-right-width: 0;
+}
+
+.p-togglebutton:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.p-togglebutton:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.p-togglebutton.p-togglebutton-checked {
+    background-color: #3B82F6;
+    border-color: #3B82F6;
+    color: #ffffff;
+}
+
+.p-togglebutton:not(.p-disabled):not(.p-togglebutton-checked):hover {
+    background-color: #e9ecef;
+    border-color: #ced4da;
+    color: #495057;
 }
 
 .product-grid {

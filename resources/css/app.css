@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 body {
     font-family: Arial, sans-serif;
@@ -6,3 +6,4 @@ body {
     padding: 0;
     box-sizing: border-box;
 }
+

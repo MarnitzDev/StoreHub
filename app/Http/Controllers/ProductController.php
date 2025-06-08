@@ -10,6 +10,13 @@ class ProductController extends Controller
     public function index()
     {
         $products = Http::get('https://fakestoreapi.com/products')->json();
-        return Inertia::render('Products', ['products' => $products]);
+        $categories = Http::get('https://fakestoreapi.com/products/categories')->json();
+
+        array_unshift($categories, 'All Categories');
+
+        return Inertia::render('Products', [
+            'products' => $products,
+            'categories' => $categories
+        ]);
     }
 }
