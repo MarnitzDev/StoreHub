@@ -25,8 +25,14 @@ WORKDIR /var/www
 # Copy existing application directory contents
 COPY . /var/www
 
-# Install dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Set permissions for Composer
+RUN chown -R www-data:www-data /var/www
+USER www-data
+
+# Install dependencies with verbose output and ignore platform requirements
+RUN composer install --no-dev --optimize-autoloader --verbose --ignore-platform-reqs || (cat /var/www/var/log/composer.log && exit 1)
+
+USER root
 
 # Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
@@ -53,6 +59,8 @@ RUN php artisan key:generate
 # Clear and cache config
 RUN php artisan config:clear
 RUN php artisan config:cache
+RUN php artisan route:cache
+RUN php artisan view:cache
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www
