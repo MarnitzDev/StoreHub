@@ -44,9 +44,14 @@ ENV NODE_ENV=production
 # Build assets
 RUN pnpm run build
 
-# Generate application key
-RUN php artisan key:generate
+# Copy .env.example to .env
+RUN cp .env.example .env
 
-# Expose port 8000 and start php-fpm server
+# Generate application key
+RUN php artisan key:generate --show --no-ansi > /tmp/app_key.txt
+
+# Expose port 8000
 EXPOSE 8000
-CMD php artisan serve --host=0.0.0.0 --port=8000
+
+# Start php-fpm server
+CMD APP_KEY=$(cat /tmp/app_key.txt) php artisan serve --host=0.0.0.0 --port=8000
