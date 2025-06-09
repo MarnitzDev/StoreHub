@@ -62,6 +62,9 @@ RUN php artisan key:generate
 # Run post-install scripts
 RUN php artisan package:discover --ansi
 
+# Set the correct APP_URL
+RUN sed -i 's#APP_URL=http://localhost#APP_URL=https://storehub-6f2p.onrender.com#' .env
+
 # Clear and cache config
 RUN php artisan config:clear
 RUN php artisan config:cache

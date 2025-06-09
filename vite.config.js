@@ -28,6 +28,7 @@ export default defineConfig(({ mode }) => {
             strictPort: false,
             https: true,
             hmr: {
+                host: 'storehub-6f2p.onrender.com',
                 clientPort: 443,
             },
             allowedHosts: [
