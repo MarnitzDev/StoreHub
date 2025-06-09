@@ -7,6 +7,7 @@
     @inertiaHead
 </head>
 <body>
+<h1>App Test</h1>
 @inertia
 </body>
 </html>
