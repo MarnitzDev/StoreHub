@@ -3,13 +3,13 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import PrimeVue from 'primevue/config';
 
 // Import PrimeVue styles
-// import 'primevue/resources/themes/lara-light-blue/theme.css';
+import 'primevue/resources/themes/lara-light-blue/theme.css';
 import 'primeicons/primeicons.css';
 
 // Import core PrimeVue functionality
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
-// Add other PrimeVue components as needed
+import Carousel from 'primevue/carousel';
 
 createInertiaApp({
     resolve: name => {
@@ -24,7 +24,7 @@ createInertiaApp({
         // Register PrimeVue components
         app.component('Button', Button);
         app.component('InputText', InputText);
-        // Register other PrimeVue components as needed
+        app.component('Carousel', Carousel);
 
         app.mount(el);
     },

@@ -44,5 +44,14 @@ export default defineConfig(({ mode }) => {
             port: parseInt(process.env.PORT || '5173'),
             strictPort: true,
         },
+        build: {
+            manifest: true,
+            outDir: 'public/build',
+            rollupOptions: {
+                output: {
+                    manualChunks: undefined,
+                },
+            },
+        },
     };
 });
